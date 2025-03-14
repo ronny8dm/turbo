@@ -7,7 +7,7 @@ export default class FilterManager {
       minPrice: "",
       maxPrice: "",
       search: "",
-      dateFrom: "", // Add date filters
+      dateFrom: "", 
       dateTo: "",
     };
     this.currentPage = 1;
@@ -27,7 +27,7 @@ export default class FilterManager {
       "min-price": { type: "price", key: "minPrice" },
       "max-price": { type: "price", key: "maxPrice" },
       "table-search-users": { type: "search", key: "search" },
-      "date-from": { type: "date", key: "dateFrom" }, // Add date selectors
+      "date-from": { type: "date", key: "dateFrom" }, 
       "date-to": { type: "date", key: "dateTo" },
     };
 
@@ -37,7 +37,7 @@ export default class FilterManager {
 
       switch (config.type) {
         case "date":
-          // For date inputs, update immediately on change
+          
           element.addEventListener("change", (e) => {
             console.log(
               `Date filter changed: ${config.key} = ${e.target.value}`
@@ -48,23 +48,23 @@ export default class FilterManager {
           });
           break;
         case "price":
-          // For price inputs, update on input with debounce
+          
           element.addEventListener("input", (e) => {
             this.filters[config.key] = e.target.value;
             this.currentPage = 1;
 
-            // Clear existing timeout
+          
             if (this.debounceTimeout) {
               clearTimeout(this.debounceTimeout);
             }
 
-            // Set new timeout
+          
             this.debounceTimeout = setTimeout(() => {
               this.refreshTable();
-            }, 300); // 300ms delay
+            }, 300); 
           });
 
-          // Also update on enter key
+       
           element.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
               e.preventDefault();
@@ -76,7 +76,7 @@ export default class FilterManager {
           break;
 
         case "select":
-          // For dropdowns, update immediately on change
+       
           element.addEventListener("change", (e) => {
             this.filters[config.key] = e.target.value;
             this.currentPage = 1;
@@ -85,7 +85,7 @@ export default class FilterManager {
           break;
 
         case "search":
-          // For search, use debounce
+     
           element.addEventListener("input", (e) => {
             this.filters[config.key] = e.target.value;
             this.currentPage = 1;
@@ -188,15 +188,13 @@ export default class FilterManager {
     const brandSelect = document.getElementById("brand-filter");
     if (!brandSelect) return;
 
-    // Get unique brands from vehicles
     const brands = [
       ...new Set(this.inventoryManager.vehicles.map((v) => v.make)),
     ].filter(Boolean);
 
-    // Clear existing options except the first one
     brandSelect.innerHTML = '<option value="">All Brands</option>';
 
-    // Add brand options
+  
     brands.sort().forEach((brand) => {
       const option = document.createElement("option");
       option.value = brand;

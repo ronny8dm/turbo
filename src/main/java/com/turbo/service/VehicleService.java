@@ -55,10 +55,9 @@ public class VehicleService {
     @Transactional
     public List<Vehicle> getVehiclesByDealership(Long dealershipId) {
         List<Vehicle> vehicles = vehicleRepository.findByDealershipId(dealershipId);
-        // Initialize the collections to avoid LazyInitializationException when
-        // serializing to JSON
+        
         vehicles.forEach(vehicle -> {
-            vehicle.getImages().size(); // Force initialization
+            vehicle.getImages().size(); 
         });
         return vehicles;
     }
@@ -66,7 +65,7 @@ public class VehicleService {
     public Vehicle updateVehicle(Long id, Vehicle updatedVehicle) {
         Vehicle vehicle = getVehicle(id);
 
-        // Update basic fields
+        
         vehicle.setMake(updatedVehicle.getMake());
         vehicle.setModel(updatedVehicle.getModel());
         vehicle.setYear(updatedVehicle.getYear());
@@ -79,11 +78,11 @@ public class VehicleService {
         vehicle.setEngineSize(updatedVehicle.getEngineSize());
         vehicle.setDoors(updatedVehicle.getDoors());
 
-        // Update sales information
+        
         vehicle.setStatus(updatedVehicle.getStatus());
         vehicle.setListPrice(updatedVehicle.getListPrice());
 
-        // Update sold information if provided
+        
         if (updatedVehicle.getSoldPrice() != null) {
             vehicle.setSoldPrice(updatedVehicle.getSoldPrice());
         }
@@ -100,20 +99,20 @@ public class VehicleService {
         Vehicle vehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle not found with id: " + id));
 
-        // First, delete all associated images
+        
         List<VehicleImage> images = imageRepository.findByVehicleId(id);
         for (VehicleImage image : images) {
-            // Delete physical file
+           
             try {
                 imageService.deleteImageFile(image);
             } catch (IOException e) {
                 log.error("Failed to delete image file for image id: " + image.getId(), e);
             }
-            // Delete database record
+           
             imageRepository.delete(image);
         }
 
-        // Now safe to delete the vehicle
+     
         vehicleRepository.delete(vehicle);
     }
 
@@ -121,23 +120,23 @@ public class VehicleService {
         Vehicle vehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found"));
 
-        // Set sold price (required)
+        
         vehicle.setSoldPrice(sellRequest.getSoldPrice());
 
-        // Set sold date (use current time if not provided)
+       
         if (sellRequest.getSoldDate() != null) {
             vehicle.setSoldDate(sellRequest.getSoldDate());
         } else {
             vehicle.setSoldDate(LocalDateTime.now());
         }
 
-        // Set sold by (can be null if not provided, will be set by controller)
+        
         if (sellRequest.getSoldBy() != null && sellRequest.getSoldBy().getId() != null) {
             vehicle.setSoldBy(userRepository.findById(sellRequest.getSoldBy().getId())
                     .orElseThrow(() -> new ResourceNotFoundException("User not found")));
         }
 
-        // Set status (default to "Sold" if not provided)
+        
         if (sellRequest.getStatus() != null) {
             vehicle.setStatus(sellRequest.getStatus());
         } else {
@@ -147,7 +146,7 @@ public class VehicleService {
         return vehicleRepository.save(vehicle);
     }
 
-    // Feature management
+   
     public VehicleFeature addFeature(Long vehicleId, VehicleFeature feature) {
         Vehicle vehicle = getVehicle(vehicleId);
         feature.setVehicle(vehicle);
@@ -169,7 +168,7 @@ public class VehicleService {
         return featureRepository.findByVehicleId(vehicleId);
     }
 
-    // Image management
+    
     public VehicleImage addImage(Long vehicleId, VehicleImage image) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId)
                 .orElseThrow(() -> new EntityNotFoundException("Vehicle not found: " + vehicleId));

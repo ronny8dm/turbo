@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   calendarInstance.render();
 
-  // Setup event handlers for booking details modal
+ 
   document
     .getElementById("close-details-modal-btn")
     ?.addEventListener("click", closeBookingDetailsModal);
@@ -48,11 +48,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function handleDateSelect(selectInfo) {
-  // Show booking modal or form
+
   const modal = document.getElementById("booking-modal");
   if (modal) {
     modal.classList.remove("hidden");
-    // Set the selected date/time in the form
+ 
     const dateTimeInput = document.querySelector('input[name="startTime"]');
     if (dateTimeInput) {
       dateTimeInput.value = selectInfo.startStr.slice(0, 16);
@@ -63,35 +63,34 @@ function handleDateSelect(selectInfo) {
 function handleEventClick(eventInfo) {
   console.log("Event clicked:", eventInfo.event);
 
-  // Get booking details
+
   const event = eventInfo.event;
   const bookingId = event.id;
   const title = event.title;
   const startTime = event.start;
   const status = event.extendedProps?.status || "";
 
-  // Customer name is either from extendedProps or from the title (first part before " - ")
+ 
   const customerName =
     event.extendedProps?.customerName || title.split(" - ")[0];
 
-  // Vehicle info from extendedProps or empty string
   const vehicleInfo = event.extendedProps?.vehicleId
     ? `${event.extendedProps.vehicleMake || ""} ${
         event.extendedProps.vehicleModel || ""
       } (ID: ${event.extendedProps.vehicleId})`
     : "";
 
-  // Populate the modal with booking details
+ 
   document.getElementById("detail-booking-id").value = bookingId;
   document.getElementById("detail-customer-name").textContent = customerName;
   document.getElementById("detail-vehicle-info").textContent = vehicleInfo;
   document.getElementById("detail-status").textContent = status;
 
-  // Format the date and time for the datetime-local input
+
   const formattedDate = startTime.toISOString().slice(0, 16);
   document.getElementById("detail-datetime").value = formattedDate;
 
-  // Show the modal
+
   const modal = document.getElementById("booking-details-modal");
   if (modal) {
     modal.classList.remove("hidden");

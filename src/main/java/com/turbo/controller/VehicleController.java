@@ -13,14 +13,10 @@ import com.turbo.service.UserDetailsImpl;
 import com.turbo.service.UserService;
 import com.turbo.service.VehicleDataService;
 import com.turbo.service.VehicleService;
-
-import io.jsonwebtoken.io.IOException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -44,7 +40,7 @@ public class VehicleController {
     private final UserService userService;
     private final ImageService imageService;
 
-    // Vehicle CRUD endpoints
+   
     @PostMapping
     public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle) {
         return ResponseEntity.ok(vehicleService.createVehicle(vehicle));
@@ -105,18 +101,18 @@ public class VehicleController {
             @RequestBody SellVehicleRequest sellRequest,
             @AuthenticationPrincipal UserDetailsImpl currentUser) {
         try {
-            // Validate required fields
+            
             if (sellRequest.getSoldPrice() == null) {
                 return ResponseEntity.badRequest().body(Map.of("error", "Sold price is required"));
             }
 
-            // If no soldBy is provided, use the current user
+         
             if (sellRequest.getSoldBy() == null || sellRequest.getSoldBy().getId() == null) {
                 User user = userService.findByEmail(currentUser.getUsername());
                 sellRequest.setSoldBy(user);
             }
 
-            // Call the service to sell the vehicle
+            
             Vehicle updatedVehicle = vehicleService.sellVehicle(id, sellRequest);
             return ResponseEntity.ok(updatedVehicle);
         } catch (ResourceNotFoundException e) {
@@ -158,8 +154,7 @@ public class VehicleController {
         }
     }
 
-    // Image management endpoints
-    // Replace the existing addImage method with this one
+   
     @PostMapping("/{vehicleId}/images")
     @Transactional
     public ResponseEntity<?> addImage(
@@ -171,11 +166,11 @@ public class VehicleController {
         try {
 
             Vehicle vehicle = vehicleService.getVehicle(vehicleId);
-            // Save the file and create image entity
+            
             VehicleImage image = imageService.saveImage(file, vehicle, displayOrder, isPrimary);
             image.setType(type);
 
-            // Save and return the image
+           
             VehicleImage savedImage = vehicleService.addImage(vehicleId, image);
             logger.info("Saved image data {}", savedImage);
             return ResponseEntity.ok(savedImage);
@@ -207,7 +202,7 @@ public class VehicleController {
             List<VehicleImage> images = vehicleService.getVehicleImages(vehicleId);
             logger.info("Found {} images for vehicle {}", images.size(), vehicleId);
 
-            // Convert to DTOs to avoid LazyInitializationException
+           
             List<VehicleImageDto> imageDTOs = images.stream()
                     .map(VehicleImageDto::fromEntity)
                     .collect(Collectors.toList());

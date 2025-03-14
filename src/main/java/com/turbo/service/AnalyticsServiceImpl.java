@@ -12,12 +12,14 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.turbo.repository.AnalyticsRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AnalyticsServiceImpl implements AnalyticsService {
 
@@ -30,12 +32,12 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         LocalDateTime startDateTime = startDate.atStartOfDay();
         LocalDateTime endDateTime = endDate.plusDays(1).atStartOfDay();
 
-        // Use ChronoUnit.DAYS for correct calculation across month boundaries
+       
         long daysBetween = ChronoUnit.DAYS.between(startDate, endDate) + 1;
         System.out.println("Current period: " + startDate + " to " + endDate);
         System.out.println("Days in current period: " + daysBetween);
 
-        // Get sold vehicles in date range
+      
         List<Object[]> salesData = analyticsRepository.findSalesByDateRange(startDateTime, endDateTime, dealershipId);
         List<String> bodyStyles = analyticsRepository.findDistinctBodyStyles(dealershipId);
         List<Object[]> topSellingCars = analyticsRepository.findTopSellingCarsByDateRange(startDateTime, endDateTime,
@@ -82,19 +84,19 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                     return item;
                 })
                 .collect(Collectors.toList());
-        // Calculate total sales amount for current period
+       
         BigDecimal totalSales = analyticsRepository.calculateTotalSalesAmount(startDateTime, endDateTime, dealershipId);
         if (totalSales == null) {
             totalSales = BigDecimal.ZERO;
         }
 
-        // Calculate previous period
+        
         LocalDate previousEndDate = startDate.minusDays(1);
         LocalDate previousStartDate = previousEndDate.minusDays(daysBetween - 1);
         LocalDateTime previousStartDateTime = previousStartDate.atStartOfDay();
         LocalDateTime previousEndDateTime = previousEndDate.plusDays(1).atStartOfDay();
 
-        // Debug logging
+       
         System.out.println(
                 "Previous period: " + previousStartDate + " to " + previousEndDate + " (" + daysBetween + " days)");
 
@@ -109,18 +111,18 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
         double percentageChange = 0;
         if (previousTotal.compareTo(BigDecimal.ZERO) > 0) {
-            // Fix percentage calculation with a cap for extreme values
+           
             percentageChange = totalSales.subtract(previousTotal)
                     .multiply(BigDecimal.valueOf(100))
                     .divide(previousTotal, 2, RoundingMode.HALF_UP)
                     .doubleValue();
 
-            // Cap extreme percentage changes at +/- 999% for display purposes
+            
         }
 
         System.out.println("Percentage change: " + percentageChange + "%");
 
-        // Get vehicles sold data
+  
         List<Object[]> vehiclesSoldByDate = analyticsRepository.findVehiclesSoldByDateRange(startDateTime, endDateTime,
                 dealershipId);
         Integer totalVehiclesSold = analyticsRepository.countVehiclesSold(startDateTime, endDateTime, dealershipId);
@@ -128,7 +130,6 @@ public class AnalyticsServiceImpl implements AnalyticsService {
             totalVehiclesSold = 0;
         }
 
-        // Calculate vehicles sold percentage change using the FIXED previous period
         Integer previousVehiclesSold = analyticsRepository.countVehiclesSold(previousStartDateTime, previousEndDateTime,
                 dealershipId);
         if (previousVehiclesSold == null) {
@@ -147,7 +148,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
         System.out.println("Vehicle sales percentage change: " + vehicleSalesPercentageChange + "%");
 
-        // Calculate average price and profit margin
+   
         BigDecimal averageListPrice = analyticsRepository.calculateAverageListPrice(startDateTime, endDateTime,
                 dealershipId);
         BigDecimal averageSoldPrice = analyticsRepository.calculateAverageSoldPrice(startDateTime, endDateTime,
@@ -169,7 +170,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                     .doubleValue();
         }
 
-        // Format data for chart
+       
         Map<String, Object> result = new HashMap<>();
         result.put("totalSales", totalSales);
         result.put("percentageChange", percentageChange);

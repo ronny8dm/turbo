@@ -28,7 +28,7 @@ public class Booking {
     @Column
     private String status = "PENDING";
 
-    // Getters and Setters
+
     public Long getId() {
         return id;
     }

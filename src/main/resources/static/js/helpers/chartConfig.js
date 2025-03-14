@@ -1,9 +1,6 @@
 /** @format */
 import { numberWithCommas } from "./utils.js";
 
-/**
- * Chart configuration factory for the dashboard
- */
  const ChartConfigs = {
   
   dropdownControls: {
@@ -106,7 +103,7 @@ import { numberWithCommas } from "./utils.js";
 
   
   createColumnChartOptions() {
-    // Your existing column chart configuration
+ 
     return {
       colors: ["#1A56DB", "#FDBA8C"],
       series: [
@@ -137,30 +134,30 @@ import { numberWithCommas } from "./utils.js";
           ],
         },
       ],
-      // Rest of your column chart configuration
+    
       chart: {
         type: "bar",
         height: "320px",
         fontFamily: "Inter, sans-serif",
         toolbar: { show: false },
       },
-      // ... other options
+    
     };
   },
 
  
   createLabelsChartOptions() {
     return {
-      // Your existing labels options
+     
       xaxis: {
         show: true,
         categories: [
           "01 Feb", "02 Feb", "03 Feb", "04 Feb",
           "05 Feb", "06 Feb", "07 Feb"
         ],
-        // ... other options
+   
       },
-      // ... other options
+     
     };
   },
 
@@ -175,7 +172,7 @@ import { numberWithCommas } from "./utils.js";
         type: "radialBar",
         sparkline: { enabled: true },
       },
-      // ... other options
+    
     };
   },
 
@@ -189,7 +186,7 @@ import { numberWithCommas } from "./utils.js";
         width: "100%",
         type: "donut",
       },
-      // ... other options
+   
     };
   },
 
@@ -211,7 +208,7 @@ import { numberWithCommas } from "./utils.js";
                  "788", "810", "866", "788", "1100", "1200"],
         },
       ],
-      // ... other options
+    
     };
   },
 

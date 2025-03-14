@@ -47,7 +47,7 @@ public class DealershipService {
 
         System.out.println("Creating dealership for owner: {} " + ownerUsername);
 
-        User owner = userRepository.findByEmail(ownerUsername) // Try email first
+        User owner = userRepository.findByEmail(ownerUsername) 
                 .orElseGet(() -> userRepository.findByUsername(ownerUsername)
                         .orElseThrow(() -> {
                             System.out.println("User not found with username/email: {} " + ownerUsername);
@@ -74,13 +74,13 @@ public class DealershipService {
         Dealership dealership = dealershipRepository.findById(dealershipId)
                 .orElseThrow(() -> new EntityNotFoundException("Dealership not found"));
 
-        // Check if user already exists in this dealership
+       
         if (userRepository.findByEmailAndDealership_Id(dto.getEmail(), dealershipId).isPresent()) {
             throw new IllegalArgumentException("User with email " + dto.getEmail() +
                     " is already registered to this dealership");
         }
 
-        // Check if user exists in system
+       
         User user = userRepository.findByEmail(dto.getEmail())
                 .map(existingUser -> {
                     if (existingUser.getDealership() != null) {
@@ -118,7 +118,7 @@ public class DealershipService {
         user.setDealership(dealership);
         User savedUser = userRepository.save(user);
 
-        // Only create reset token for new users
+        
         if (user.getPasswordHash() != null) {
             passwordResetService.createPasswordResetTokenForUser(savedUser);
         }

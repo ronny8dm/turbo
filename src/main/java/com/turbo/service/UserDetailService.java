@@ -16,11 +16,11 @@ public class UserDetailService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String emailOrUsername) throws UsernameNotFoundException {
-        // Fetch user with authorities
+       
         User user = userRepository.findByEmailWithAuthorities(emailOrUsername)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + emailOrUsername));
 
-        // Debugging
+       
         System.out.println("User authorities: " + user.getAuthorities());
 
         return UserDetailsImpl.build(user);

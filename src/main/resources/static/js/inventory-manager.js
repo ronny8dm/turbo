@@ -50,7 +50,7 @@ class InventoryManager {
 
     this.vehicles = await this.apiService.fetchVehicles(this.dealershipId);
 
-    // Load images for all vehicles
+   
     const imageLoadPromises = this.vehicles.map(async (vehicle) => {
       try {
         const response = await fetch(
@@ -70,7 +70,7 @@ class InventoryManager {
       }
     });
 
-    // Wait for all images to load (or fail)
+  
     await Promise.all(imageLoadPromises);
 
     this.uiManager.renderTable(this.vehicles);
@@ -84,11 +84,11 @@ class InventoryManager {
         make: vehicleData.CarMake?.CurrentTextValue,
         model:model,
         year: vehicleData.RegistrationYear,
-        postcode: "SW1A1AA", // You can make this configurable
+        postcode: "SW1A1AA",
       });
 
       console.log("Competitors:", competitors);
-      // Handle the response
+    
       if (competitors && competitors.length > 0) {
         this.renderSimilarVehicles(competitors);
       } else {

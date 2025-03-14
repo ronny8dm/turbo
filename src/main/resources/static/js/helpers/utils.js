@@ -24,31 +24,31 @@ export const showModal = ({ message, isSuccess }) => {
     return;
   }
 
-  // Update modal message
+  
   modalMessage.textContent = message;
 
-  // Update modal icon for success or error
+ 
   if (isSuccess) {
     modalIcon.classList.add("text-green-400", "dark:text-green-200");
     modalIcon.classList.remove("text-red-400", "dark:text-red-200");
-    modalIconPath.setAttribute("d", "M10 6l3 3-3 3m3-3H7"); // Success Icon
+    modalIconPath.setAttribute("d", "M10 6l3 3-3 3m3-3H7"); 
   } else {
     modalIcon.classList.add("text-red-400", "dark:text-red-200");
     modalIcon.classList.remove("text-green-400", "dark:text-green-200");
-    modalIconPath.setAttribute("d", "M10 6V10m0 0H6m4 0h4m-4 0v4m0-4v-4m0 8a8 8 0 1 0-8-8 8 8 0 0 0 8 8z"); // Error Icon
+    modalIconPath.setAttribute("d", "M10 6V10m0 0H6m4 0h4m-4 0v4m0-4v-4m0 8a8 8 0 1 0-8-8 8 8 0 0 0 8 8z");
   }
 
-  // Ensure Flowbite is loaded
+
   if (!window.Flowbite) {
     modal.classList.remove("hidden");
     return;
   }
 
-  // Create a new Flowbite modal instance and show it
+
   const targetModal = new window.Flowbite.default.Modal(modal);
   targetModal.show();
 
-  // Auto-hide after 3 seconds
+
   setTimeout(() => {
     targetModal.hide();
   }, 3000);
@@ -59,14 +59,14 @@ export function numberWithCommas(x) {
 }
 
 export function convertSalesToCSV(salesData) {
-  // Header row
+
   let csvContent = "Date,Sales Amount (£)\n";
   
-  // If we have sales data, add it to the CSV
+ 
   if (salesData && salesData.salesData && Array.isArray(salesData.salesData)) {
     salesData.salesData.forEach(item => {
       if (Array.isArray(item) && item.length === 2) {
-        // Format date nicely for CSV
+        
         const dateObj = new Date(item[0]);
         const formattedDate = dateObj.toLocaleDateString('en-GB', {
           year: 'numeric',
@@ -74,15 +74,15 @@ export function convertSalesToCSV(salesData) {
           day: '2-digit'
         });
         
-        // Add row with date and sales amount
+    
         csvContent += `${formattedDate},${item[1]}\n`;
       }
     });
     
-    // Add a total row
+ 
     csvContent += `\nTotal,${salesData.totalSales}\n`;
     
-    // Add percentage change
+    
     csvContent += `Percentage Change,${salesData.percentageChange}%\n`;
   }
   
@@ -90,14 +90,14 @@ export function convertSalesToCSV(salesData) {
 }
 
 export function convertCarsSoldToCSV(salesData) {
-  // Header row
+ 
   let csvContent = "Date,Cars Sold,Average Price (£),Revenue (£)\n";
   
-  // If we have vehicle sold data, add it to the CSV
+
   if (salesData && salesData.vehiclesSoldByDate && Array.isArray(salesData.vehiclesSoldByDate)) {
     salesData.vehiclesSoldByDate.forEach(item => {
       if (Array.isArray(item) && item.length >= 2) {
-        // Format date nicely for CSV
+      
         const dateObj = new Date(item[0]);
         const formattedDate = dateObj.toLocaleDateString('en-GB', {
           year: 'numeric',
@@ -109,12 +109,11 @@ export function convertCarsSoldToCSV(salesData) {
         const avgPrice = salesData.averagePrice || 0;
         const revenue = carsSold * avgPrice;
         
-        // Add row with date, cars sold, and calculated revenue
+    
         csvContent += `${formattedDate},${carsSold},${Math.round(avgPrice)},${Math.round(revenue)}\n`;
       }
     });
-    
-    // Add summary rows
+  
     csvContent += `\nTotal Cars Sold,${salesData.totalVehiclesSold || 0}\n`;
     csvContent += `Percentage Change,${salesData.vehicleSalesPercentageChange || 0}%\n`;
     csvContent += `Profit Margin,${salesData.profitMargin || 0}%\n`;
@@ -136,17 +135,17 @@ export function downloadFile(content, fileName, mimeType) {
 }
 
 export function convertProfitDataToCSV(salesData) {
-  // Header row
+
   let csvContent = "Date,Revenue (£),Profit (£),Profit Margin (%)\n";
   
-  // If we have sales data, add it to the CSV
+
   if (salesData && salesData.salesData && Array.isArray(salesData.salesData)) {
     const profitMargin = salesData.profitMargin || 0;
     const profitMarginDecimal = profitMargin / 100;
     
     salesData.salesData.forEach(item => {
       if (Array.isArray(item) && item.length >= 2) {
-        // Format date nicely for CSV
+   
         const dateObj = new Date(item[0]);
         const formattedDate = dateObj.toLocaleDateString('en-GB', {
           year: 'numeric',
@@ -161,7 +160,7 @@ export function convertProfitDataToCSV(salesData) {
       }
     });
     
-    // Add summary rows
+
     const totalRevenue = salesData.totalSales || 0;
     const totalProfit = Math.round(totalRevenue * profitMarginDecimal);
     
@@ -196,16 +195,16 @@ export function convertBrandsDataToCSV(salesData) {
 export function convertTeamProgressToCSV(salesData) {
   let csvContent = "Metric,Value,Target\n";
   
-  // Add team metrics
+
   const profitMargin = salesData.profitMargin || 0;
-  const targetProgress = 80; // Update this with your actual target
+  const targetProgress = 80;
   const stockTurnover = (salesData.totalVehiclesSold || 0) / (salesData.averageInventory || 1) * 100;
   
   csvContent += `Target Progress,${targetProgress.toFixed(1)}%,100%\n`;
   csvContent += `Profit Margin,${profitMargin.toFixed(1)}%,80%\n`;
   csvContent += `Stock Turnover,${stockTurnover.toFixed(1)}%,70%\n`;
   
-  // Add overall performance
+
   const averagePerformance = (targetProgress + profitMargin + stockTurnover) / 3;
   csvContent += `\nOverall Performance,${averagePerformance.toFixed(1)}%\n`;
   
@@ -228,8 +227,7 @@ export function convertSalesComparisonToCSV(salesData) {
       
       csvContent += `${formattedDate},${currentAmount},${previousAmount.toFixed(2)},${difference.toFixed(1)}%\n`;
     });
-    
-    // Add totals
+
     const currentTotal = salesData.salesData.reduce((sum, [_, amount]) => sum + amount, 0);
     const previousTotal = currentTotal * 0.8;
     const totalDifference = ((currentTotal - previousTotal) / previousTotal) * 100;
@@ -264,9 +262,9 @@ function editDistance(str1, str2) {
         matrix[j][i] = matrix[j-1][i-1];
       } else {
         matrix[j][i] = Math.min(
-          matrix[j-1][i-1] + 1, // substitution
-          matrix[j][i-1] + 1,   // insertion
-          matrix[j-1][i] + 1    // deletion
+          matrix[j-1][i-1] + 1, 
+          matrix[j][i-1] + 1,  
+          matrix[j-1][i] + 1   
         );
       }
     }
@@ -274,23 +272,22 @@ function editDistance(str1, str2) {
   return matrix[str2.length][str1.length];
 }
 
-// Replace the existing findMatchingModel function
+
 export function findMatchingModel(fullModelName) {
   console.log("Searching for model:", fullModelName);
   if (!fullModelName) return "";
 
-  // Clean and normalize the input
+
   const modelLower = fullModelName.toLowerCase()
-    .replace(/\s*-\s*/g, ' ')           // Replace hyphens with spaces
-    .replace(/\s+/g, ' ')               // Normalize spaces
-    .replace(/\([^)]*\)/g, '')          // Remove parentheses and their contents
+    .replace(/\s*-\s*/g, ' ')          
+    .replace(/\s+/g, ' ')              
+    .replace(/\([^)]*\)/g, '')        
     .trim();
 
-  // Extract the first part of the model name (usually the main model)
   const mainModelName = modelLower.split(/\s+/).slice(0, 2).join(' ');
 
   console.log("Main model name:", mainModelName);
-  // Find potential matches with similarity scores
+
   const potentialMatches = carModels
     .map(model => ({
       model,
@@ -300,9 +297,9 @@ export function findMatchingModel(fullModelName) {
       ),
       isContained: modelLower.includes(model.toLowerCase())
     }))
-    .filter(match => match.score > 0.6 || match.isContained) // Filter out low-scoring matches
+    .filter(match => match.score > 0.6 || match.isContained) 
     .sort((a, b) => {
-      // Prioritize contained matches, then by similarity score
+      
       if (a.isContained && !b.isContained) return -1;
       if (!a.isContained && b.isContained) return 1;
       return b.score - a.score;
@@ -310,6 +307,5 @@ export function findMatchingModel(fullModelName) {
 
     console.log("Potential matches:", potentialMatches);
 
-  // Return the best match or empty string
   return potentialMatches.length > 0 ? potentialMatches[0].model : "";
 }

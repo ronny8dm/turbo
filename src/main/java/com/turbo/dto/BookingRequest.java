@@ -6,7 +6,7 @@ public class BookingRequest {
     private String startTime;
     private String status;
 
-    // Getters and Setters
+   
     public String getCustomerName() {
         return customerName;
     }

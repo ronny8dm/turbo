@@ -27,14 +27,14 @@ import {
 } from "./helpers/utils.js";
 import ChartConfigs from "./helpers/chartConfig.js";
 
-// Create API service instance
+
 const apiService = new ApiService();
 
-// Keep track of the current sales data for the report
+
 let currentSalesData = null;
 let currentCarsSoldData = null;
 
-// Define time range options
+
 const TIME_RANGES = {
   WEEK: { label: "Last 7 days", days: 7 },
   MONTH: { label: "Last 30 days", days: 30 },
@@ -42,16 +42,16 @@ const TIME_RANGES = {
   YEAR: { label: "Year to date", days: 365 },
 };
 
-// Get date strings for API calls
+
 function getDateRangeStrings(range) {
   const endDate = new Date(); // Today
   let startDate;
 
   if (range.label === "Year to date") {
-    startDate = new Date(endDate.getFullYear(), 0, 1); // Jan 1st of current year
+    startDate = new Date(endDate.getFullYear(), 0, 1); 
   } else {
     startDate = new Date();
-    startDate.setDate(endDate.getDate() - (range.days - 1)); // Subtract days-1 for inclusive range
+    startDate.setDate(endDate.getDate() - (range.days - 1)); 
   }
 
   console.log(
@@ -70,7 +70,7 @@ function getDateRangeStrings(range) {
   };
 }
 
-// Initialize the dashboard with data
+
 async function initDashboard(timeRange = TIME_RANGES.MONTH, chartType = null) {
   try {
     console.log(`Fetching sales data for ${timeRange.label}...`);
@@ -85,9 +85,9 @@ async function initDashboard(timeRange = TIME_RANGES.MONTH, chartType = null) {
 
     console.log("Sales data fetched:", salesData);
 
-    // Update charts based on chartType
+  
     if (!chartType) {
-      // Initial load - update everything
+   
       currentSalesData = salesData;
       currentCarsSoldData = salesData;
       updateSalesUI(salesData);
@@ -108,7 +108,7 @@ async function initDashboard(timeRange = TIME_RANGES.MONTH, chartType = null) {
       return;
     }
 
-    // Update only the specific chart
+ 
     if (chartType === "sales") {
       currentSalesData = salesData;
       updateSalesUI(salesData);
@@ -142,7 +142,7 @@ async function initDashboard(timeRange = TIME_RANGES.MONTH, chartType = null) {
   }
 }
 
-// Generate and download the sales report
+
 function downloadSalesReport() {
   if (!currentSalesData) {
     console.error("No sales data available for report");
@@ -150,17 +150,17 @@ function downloadSalesReport() {
   }
 
   try {
-    // Get the current date for filename
+    
     const today = new Date();
     const dateStr = today.toISOString().split("T")[0];
 
-    // Generate CSV content
+   
     const csvContent = convertSalesToCSV(currentSalesData);
 
-    // Create filename with current date
+   
     const filename = `sales_report_${dateStr}.csv`;
 
-    // Download the file
+   
     downloadFile(csvContent, filename, "text/csv;charset=utf-8;");
 
     console.log("Sales report downloaded successfully");
@@ -169,7 +169,6 @@ function downloadSalesReport() {
   }
 }
 
-// Generate and download the cars sold report
 function downloadCarsSoldReport() {
   if (!currentCarsSoldData) {
     console.error("No cars sold data available for report");
@@ -177,17 +176,17 @@ function downloadCarsSoldReport() {
   }
 
   try {
-    // Get the current date for filename
+  
     const today = new Date();
     const dateStr = today.toISOString().split("T")[0];
 
-    // Generate CSV content
+   
     const csvContent = convertCarsSoldToCSV(currentCarsSoldData);
 
-    // Create filename with current date
+    
     const filename = `cars_sold_report_${dateStr}.csv`;
 
-    // Download the file
+
     downloadFile(csvContent, filename, "text/csv;charset=utf-8;");
 
     console.log("Cars sold report downloaded successfully");
@@ -214,7 +213,7 @@ function downloadBrandsReport() {
   }
 }
 
-// Generate and download the profit report
+
 function downloadProfitReport() {
   if (!currentSalesData) {
     console.error("No sales data available for profit report");
@@ -222,17 +221,17 @@ function downloadProfitReport() {
   }
 
   try {
-    // Get the current date for filename
+   
     const today = new Date();
     const dateStr = today.toISOString().split("T")[0];
 
-    // Generate CSV content
+    
     const csvContent = convertProfitDataToCSV(currentSalesData);
 
-    // Create filename with current date
+
     const filename = `profit_report_${dateStr}.csv`;
 
-    // Download the file
+ 
     downloadFile(csvContent, filename, "text/csv;charset=utf-8;");
 
     console.log("Profit report downloaded successfully");
@@ -278,10 +277,10 @@ function downloadSalesComparisonReport() {
   }
 }
 
-// Make function globally accessible for onclick handler
+
 window.downloadProfitReport = downloadProfitReport;
 
-// Setup time range dropdown
+
 function setupTimeRangeDropdowns() {
   setupDropdown(
     "salesTimeRangeDropdownButton",
@@ -321,7 +320,7 @@ function setupDropdown(buttonId, menuId, chartType) {
     return;
   }
 
-  // Get the dropdown configuration
+  
   const dropdownConfig = Object.values(ChartConfigs.dropdownControls).find(
     (config) => config.buttonId === buttonId
   );
@@ -331,15 +330,14 @@ function setupDropdown(buttonId, menuId, chartType) {
     return;
   }
 
-  // Clear existing items
+
   dropdownMenu.innerHTML = "";
 
-  // Create dropdown list
   const ul = document.createElement("ul");
   ul.className = "py-2 text-sm text-gray-700 dark:text-gray-200";
   ul.setAttribute("aria-labelledby", buttonId);
 
-  // Add options
+
   Object.entries(TIME_RANGES).forEach(([key, range]) => {
     const li = document.createElement("li");
     const a = document.createElement("a");
@@ -350,10 +348,10 @@ function setupDropdown(buttonId, menuId, chartType) {
     a.addEventListener("click", async (e) => {
       e.preventDefault();
 
-      // Update only the specific chart
+    
       await initDashboard(range, chartType);
 
-      // Close dropdown
+   
       dropdownMenu.classList.add("hidden");
     });
 
@@ -363,7 +361,7 @@ function setupDropdown(buttonId, menuId, chartType) {
 
   dropdownMenu.appendChild(ul);
 
-  // Setup dropdown toggle
+
   setupDropdownToggle(buttonId, menuId);
 }
 
@@ -378,7 +376,6 @@ function setupDropdownToggle(buttonId, menuId) {
       dropdownContent.classList.toggle("hidden");
     });
 
-    // Close dropdown when clicking outside
     document.addEventListener("click", (e) => {
       if (
         !toggleButton.contains(e.target) &&
@@ -390,9 +387,9 @@ function setupDropdownToggle(buttonId, menuId) {
   }
 }
 
-// Setup event listeners
+
 function setupEventListeners() {
-  // Setup sales report download button
+
   const salesReportBtn = document.querySelector(
     "a.uppercase.text-sm.font-semibold:has(svg)"
   );
@@ -425,7 +422,7 @@ function setupEventListeners() {
     console.error("Sales report button not found");
   }
 
-  // Setup cars sold report download button
+
  
   if (brandsReportBtn) {
     brandsReportBtn.addEventListener("click", (e) => {
@@ -449,18 +446,17 @@ function setupEventListeners() {
 
   setupTimeRangeDropdowns();
 
-  // Rest of your event listener setup code...
+
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("DOM loaded, initializing analytics dashboard...");
 
-  // Setup the dropdown
   setupTimeRangeDropdowns();
 
-  // Setup event listeners
+
   setupEventListeners();
 
-  // Initialize with default time range (month)
+
   await initDashboard(TIME_RANGES.MONTH);
 });

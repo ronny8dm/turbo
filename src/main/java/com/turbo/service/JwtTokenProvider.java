@@ -19,7 +19,7 @@ import java.util.function.Function;
 @Service
 public class JwtTokenProvider {
 
-    @Value("${app.jwtSecret}") // Use correct property annotation
+    @Value("${app.jwtSecret}") 
     private String jwtSecret;
 
     private static final Log logger = LogFactory.getLog(JwtTokenProvider.class);
@@ -78,9 +78,9 @@ public class JwtTokenProvider {
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parser()
-                .setSigningKey(getSignInKey()) // Use the secret key here
+                .setSigningKey(getSignInKey()) 
                 .build()
-                .parseClaimsJws(token) // Verify and parse the token
+                .parseClaimsJws(token) 
                 .getBody();
     }
 
@@ -92,13 +92,13 @@ public class JwtTokenProvider {
         try {
             logger.debug("Validating token: " + token);
 
-            // Parse and verify the token
+           
             Jwts.parser()
                     .setSigningKey(getSignInKey())
                     .build()
                     .parseClaimsJws(token);
 
-            // If no exception is thrown, check if token is expired
+          
             return !isTokenExpired(token);
         } catch (SecurityException e) {
             logger.error("Invalid JWT signature: " + e.getMessage());

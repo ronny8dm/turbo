@@ -2,7 +2,7 @@
 
 import { numberWithCommas } from "./utils.js";
 
-// Keep track of chart instances
+
 let salesChartInstance = null;
 let carsSoldChartInstance = null;
 let revenueProfitChartInstance = null;
@@ -12,14 +12,14 @@ let  teamChartInstance = null;
 let stockChartInstance = null;
 
 export function renderSalesChart(salesData) {
-  // Transform the salesData.salesData array into labels and data arrays
+ 
   const labels = [];
   const data = [];
 
   if (salesData.salesData && Array.isArray(salesData.salesData)) {
     salesData.salesData.forEach((item) => {
       if (Array.isArray(item) && item.length === 2) {
-        // Format the date to be more readable
+       
         const dateObj = new Date(item[0]);
         const formattedDate = dateObj.toLocaleDateString("en-GB", {
           day: "2-digit",
@@ -33,19 +33,19 @@ export function renderSalesChart(salesData) {
 
   console.log("Chart data prepared:", { labels, data });
 
-  // Calculate min and max for better y-axis scaling
+ 
   let minValue = 0;
   let maxValue = Math.max(...data);
 
   if (data.length > 0) {
-    // Set min to the lowest non-zero value or 0
+    
     const nonZeroValues = data.filter((val) => val > 0);
     minValue = nonZeroValues.length > 0 ? Math.min(...nonZeroValues) : 0;
 
-    // Adjust min to be slightly lower for better visualization
+  
     minValue = Math.max(0, minValue * 0.8);
 
-    // Adjust max to be slightly higher for better visualization
+    
     maxValue = maxValue * 1.1;
   }
 
@@ -159,10 +159,10 @@ export function renderSalesChart(salesData) {
     },
     yaxis: {
       show: true,
-      min: minValue, // Use calculated min value
-      max: maxValue, // Use calculated max value
-      forceNiceScale: true, // Force nice round numbers
-      tickAmount: 5, // Show approximately 5 y-axis labels
+      min: minValue, 
+      max: maxValue, 
+      forceNiceScale: true, 
+      tickAmount: 5, 
       labels: {
         formatter: function (value) {
           if (value >= 1000000) {
@@ -194,13 +194,13 @@ export function renderSalesChart(salesData) {
 
   const areaChartElement = document.getElementById("area-chart");
   if (areaChartElement && typeof ApexCharts !== "undefined") {
-    // Destroy previous chart instance if it exists
+
     if (salesChartInstance) {
       salesChartInstance.destroy();
       console.log("Previous chart instance destroyed");
     }
 
-    // Create new chart
+  
     salesChartInstance = new ApexCharts(areaChartElement, options);
     salesChartInstance
       .render()
@@ -253,15 +253,15 @@ export function renderRevenueVsProfitChart(salesData) {
     return;
   }
 
-  // Calculate profit margin as a decimal for calculations
+  
   const profitMarginDecimal = (salesData.profitMargin || 0) / 100;
 
-  // Extract and format data for chart
+  
   const labels = [];
   const revenueData = [];
   const profitData = [];
 
-  // Process sales data to extract revenue and calculate profit
+
   salesData.salesData.forEach((item) => {
     if (Array.isArray(item) && item.length >= 2) {
       const date = new Date(item[0]);
@@ -285,19 +285,19 @@ export function renderRevenueVsProfitChart(salesData) {
     profitData,
   });
 
-  // Calculate total profit for display
+
   const totalProfit = Math.round(salesData.totalSales * profitMarginDecimal);
 
-  // Update the total profit display element if it exists
+ 
   const totalProfitEl = document.getElementById("total-profit-amount");
   if (totalProfitEl) {
     totalProfitEl.textContent = numberWithCommas(totalProfit);
   }
 
-  // Calculate min and max for better y-axis scaling
+
   const allValues = [...revenueData, ...profitData];
-  const maxValue = Math.max(...allValues) * 1.1; // Add 10% padding
-  const minValue = 0; // Start at 0 for financial charts
+  const maxValue = Math.max(...allValues) * 1.1; 
+  const minValue = 0; 
 
   const options = {
     chart: {
@@ -475,7 +475,7 @@ export function renderRevenueVsProfitChart(salesData) {
 
   const chartElement = document.getElementById("revenue-profit-chart");
   if (chartElement && typeof ApexCharts !== "undefined") {
-    // Destroy previous chart instance if it exists
+  
     if (revenueProfitChartInstance) {
       revenueProfitChartInstance.destroy();
       console.log("Previous revenue vs profit chart instance destroyed");
@@ -506,18 +506,18 @@ export function renderCarsSoldChart(salesData) {
     })
   );
 
-  // Calculate min and max for y-axis scaling
+
   let minValue = 0;
   let maxValue = Math.max(...data) || 0;
 
   if (data.length > 0) {
     const nonZeroValues = data.filter((val) => val > 0);
     minValue = nonZeroValues.length > 0 ? Math.min(...nonZeroValues) : 0;
-    minValue = Math.max(0, minValue * 0.8); // Adjust min slightly lower
-    maxValue = maxValue * 1.1; // Adjust max slightly higher
+    minValue = Math.max(0, minValue * 0.8); 
+    maxValue = maxValue * 1.1; 
   }
 
-  console.log(`Cars sold chart scale: min=${minValue}, max=${maxValue}`); // This could be the source
+  console.log(`Cars sold chart scale: min=${minValue}, max=${maxValue}`);
 
   const options = {
     series: [{ name: "Cars Sold", data }],
@@ -539,7 +539,7 @@ export function renderCarsSoldChart(salesData) {
   const carsSoldChartElement = document.getElementById("cars-sold-chart");
 
   if (carsSoldChartElement && typeof ApexCharts !== "undefined") {
-    // Reset container height before destroying previous instance
+    
     carsSoldChartElement.style.height = "300px";
 
     if (carsSoldChartInstance) {
@@ -547,12 +547,12 @@ export function renderCarsSoldChart(salesData) {
       console.log("Previous cars sold chart instance destroyed");
     }
 
-    // Create new chart
+   
     carsSoldChartInstance = new ApexCharts(carsSoldChartElement, options);
     carsSoldChartInstance
       .render()
       .then(() => {
-        // Force chart update after render
+        
         carsSoldChartInstance.updateOptions({
           chart: {
             height: 300,
@@ -568,13 +568,13 @@ export function renderCarsSoldChart(salesData) {
   }
 }
 
-// Add to chartUtils.js
+
 export function renderTeamProgressChart(salesData) {
   const profitMargin = salesData.profitMargin || 0;
   const targetProgress = 80; 
   const stockTurnover = calculateStockTurnover(salesData);
 
-  // Update KPI displays
+
   document.getElementById("team-target-percentage").textContent =
     Math.round(targetProgress);
   document.getElementById("team-profit-percentage").textContent =
@@ -667,7 +667,7 @@ export function renderBrandsChart(salesData) {
     if (bodyStyle === 'all') {
       chartData = salesData.topSellingCars || [];
     } else {
-      // Get data for the selected body style without case transformation
+    
       chartData = salesData.topSellingByBodyStyle[bodyStyle] || [];
       console.log('Selected body style data:', bodyStyle, chartData);
     }
@@ -691,7 +691,7 @@ export function renderBrandsChart(salesData) {
       });
     }
 
-    // If no data, show placeholder
+  
     if (series.length === 0) {
       series.push(100);
       labels.push('No Data Available');
@@ -778,7 +778,7 @@ export function renderBrandsChart(salesData) {
     brandsChartInstance = new ApexCharts(brandsChartElement, getChartOptions());
     brandsChartInstance.render();
 
-    // Handle checkbox changes
+    
     const checkboxes = document.querySelectorAll('#bodyStyles input[type="checkbox"]');
     checkboxes.forEach((checkbox) => {
       checkbox.addEventListener('change', (event) => {
@@ -798,7 +798,7 @@ function createBodyStyleCheckboxes(bodyStyles) {
   const container = document.getElementById("bodyStyles");
   if (!container) return;
 
-  container.innerHTML = ""; // Clear existing checkboxes
+  container.innerHTML = ""; 
 
   bodyStyles.forEach((style) => {
     const div = document.createElement("div");
@@ -819,12 +819,12 @@ function createBodyStyleCheckboxes(bodyStyles) {
 
 
 export function renderSalesComparisonChart(salesData) {
-  // Transform the data for comparison
+ 
   const dates = [];
   const currentYearData = [];
   const previousYearData = [];
 
-  // Get data for current period
+  
   if (salesData.salesData) {
     salesData.salesData.forEach(([date, amount]) => {
       const formattedDate = new Date(date).toLocaleDateString('en-GB', { 
@@ -836,9 +836,8 @@ export function renderSalesComparisonChart(salesData) {
     });
   }
 
-  // Calculate previous year data (for example, 20% less than current year)
   currentYearData.forEach(amount => {
-    previousYearData.push(Math.round(amount * 0.8)); // Simulated previous year data
+    previousYearData.push(Math.round(amount * 0.8)); 
   });
 
   const options = {
@@ -862,11 +861,11 @@ export function renderSalesComparisonChart(salesData) {
     colors: ['#31C48D', '#F05252'],
     plotOptions: {
       bar: {
-        horizontal: false, // Change to false for vertical bars
+        horizontal: false, 
         columnWidth: '55%',
         borderRadius: 4,
         dataLabels: {
-          position: 'top' // Show values at top of bars
+          position: 'top' 
         },
       },
     },
@@ -928,13 +927,13 @@ export function renderSalesComparisonChart(salesData) {
     }
   };
 
-  // Calculate and update totals
+ 
   const currentTotal = currentYearData.reduce((sum, val) => sum + val, 0);
   const previousTotal = previousYearData.reduce((sum, val) => sum + val, 0);
   const percentageChange = previousTotal ? 
     ((currentTotal - previousTotal) / previousTotal) * 100 : 100;
 
-  // Update UI
+
   document.getElementById('current-period-total').textContent = 
     numberWithCommas(currentTotal);
   document.getElementById('current-period-sales').textContent = 
@@ -957,24 +956,23 @@ export function renderSalesComparisonChart(salesData) {
 
 export function renderStockStatusChart(stockData) {
   try {
-    // Log incoming data for debugging
+ 
     console.log('Stock status data:', stockData);
 
-    // Extract and default values
     const available = parseInt(stockData.availableVehicles || 0);
     const reserved = parseInt(stockData.reservedVehicles || 0);
     const total = available + reserved;
 
     console.log('Processed values:', { available, reserved, total });
 
-    // Get all required elements
+  
     const elements = {
       total: document.getElementById('total-vehicles'),
       available: document.getElementById('available-vehicles'),
       reserved: document.getElementById('reserved-vehicles'),
     };
 
-    // Verify all elements exist
+   
     const missingElements = Object.entries(elements)
       .filter(([key, el]) => !el)
       .map(([key]) => key);
@@ -984,12 +982,12 @@ export function renderStockStatusChart(stockData) {
       return;
     }
 
-    // Update the values
+
     elements.total.textContent = total.toString();
     elements.available.textContent = available.toString();
     elements.reserved.textContent = reserved.toString();
 
-    // Log successful update
+ 
     console.log('Stock status updated successfully', {
       total: elements.total.textContent,
       available: elements.available.textContent,

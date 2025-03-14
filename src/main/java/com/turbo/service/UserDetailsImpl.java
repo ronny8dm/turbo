@@ -18,7 +18,7 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<Authority> authorities;
     private User user;
 
-    // Constructor
+    
     public UserDetailsImpl(Long id, String username, String email, String password, Boolean enabled,
             Collection<Authority> authorities, User user) {
         this.id = id;

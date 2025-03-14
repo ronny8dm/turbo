@@ -142,7 +142,7 @@ public class CompetitorsListingsServiceImpl implements CompetitorsListingsServic
                     }
                     listing.setImageUrl(imageUrl);
 
-                    // Extract title and split into make/model
+                    
                     Element titleLink = item.selectFirst("a[data-testid='search-listing-title']");
                     String makeValue = null;
                     String modelValue = null;
@@ -150,7 +150,7 @@ public class CompetitorsListingsServiceImpl implements CompetitorsListingsServic
                         String fullTitle = titleLink.ownText().trim();
                         logger.info("Found title: {}", fullTitle);
 
-                        // Split the title into words
+                       
                         String[] titleParts = fullTitle.split("\\s+");
                         if (titleParts.length >= 2) {
                             makeValue = titleParts[0];

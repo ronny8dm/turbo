@@ -14,7 +14,7 @@ class AuthHandler {
   }
 
   getToken() {
-    // Try all possible token storage locations
+    
     return localStorage.getItem(this.tokenKey) || 
            localStorage.getItem("token") || 
            sessionStorage.getItem("token");
@@ -144,7 +144,7 @@ class ProfileManager {
       if (profile.dealershipId === null) {
         const modal = document.getElementById("dealership-modal");
         this.showNoDealershipState();
-        console.log("Modal element:", modal); // Debug log
+        console.log("Modal element:", modal); 
         if (modal) {
           modal.classList.remove("hidden");
           modal.classList.add("flex");
@@ -556,16 +556,16 @@ class DealershipManager {
         throw new Error("No response from server");
       }
 
-      // Close the modal
+     
       this.toggleUserModal(false);
 
-      // Show success message
+     
       showModal({
         message: "User added successfully",
         isSuccess: true,
       });
 
-      // Reload team members
+    
       await profileManager.loadTeamMembers(profile.dealershipId);
     } catch (error) {
       console.error("Error adding user:", error);
@@ -602,7 +602,7 @@ class DealershipManager {
         isSuccess: true,
       });
 
-      // Reload team members
+   
       const profileManager = new ProfileManager(this.authHandler);
       await profileManager.loadTeamMembers(profile.dealershipId);
     } catch (error) {
@@ -615,7 +615,7 @@ class DealershipManager {
   }
 }
 
-// Initialize the application
+
 window.addEventListener("DOMContentLoaded", async () => {
   console.log("=== DOM Content Loaded ===");
 
@@ -625,7 +625,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   window.dealershipManager = dealershipManager;
 
-  // Check authentication
+
   if (!authHandler.getToken()) {
     console.error("No token found, redirecting to login page.");
     window.location.href = "/login";
@@ -659,7 +659,7 @@ window.toggleUserModal = function (show) {
   }
 };
 
-// Make logout function available globally
+
 window.logout = () => {
   localStorage.removeItem("jwtToken");
   localStorage.removeItem("token");
@@ -672,11 +672,11 @@ window.logout = () => {
 };
 
 function showModal({ message, isSuccess }) {
-  // Update modal message
+
   const modalMessage = document.getElementById("modal-message");
   modalMessage.textContent = message;
 
-  // Update modal icon
+ 
   const modalIcon = document.getElementById("modal-icon");
   const modalIconPath = document.getElementById("modal-icon-path");
 
@@ -685,21 +685,21 @@ function showModal({ message, isSuccess }) {
     modalIcon.classList.remove("text-red-400", "dark:text-red-200");
     modalIconPath.setAttribute(
       "d",
-      "M10 6l3 3-3 3m3-3H7" // Success Icon
+      "M10 6l3 3-3 3m3-3H7" 
     );
   } else {
     modalIcon.classList.add("text-red-400", "dark:text-red-200");
     modalIcon.classList.remove("text-green-400", "dark:text-green-200");
     modalIconPath.setAttribute(
       "d",
-      "M10 6V10m0 0H6m4 0h4m-4 0v4m0-4v-4m0 8a8 8 0 1 0-8-8 8 8 0 0 0 8 8z" // Error Icon
+      "M10 6V10m0 0H6m4 0h4m-4 0v4m0-4v-4m0 8a8 8 0 1 0-8-8 8 8 0 0 0 8 8z" 
     );
   }
 
-  // Show modal
+ 
   const modal = document.getElementById("success-modal");
   modal.classList.remove("hidden");
-  modal.classList.add("flex"); // Ensure it displays as a flex container
+  modal.classList.add("flex"); 
 }
 
 document.querySelectorAll("[data-modal-hide]").forEach((button) => {
@@ -716,12 +716,12 @@ window.toggleDealershipModal = function (show) {
       if (show) {
           modal.classList.remove("hidden");
           modal.classList.add("flex");
-          // Add backdrop and prevent body scroll
+         
           document.body.style.overflow = 'hidden';
       } else {
           modal.classList.add("hidden");
           modal.classList.remove("flex");
-          // Remove backdrop and restore body scroll
+        
           document.body.style.overflow = 'auto';
       }
   } else {

@@ -35,7 +35,7 @@ public class VehicleDataService {
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         String xmlResponse = response.getBody();
 
-        // Extract JSON from XML response
+       
         Pattern pattern = Pattern.compile("<vehicleJson>(.*?)</vehicleJson>", Pattern.DOTALL);
         Matcher matcher = pattern.matcher(xmlResponse);
 

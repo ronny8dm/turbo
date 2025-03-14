@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class LoginResponse {
-    // Getters and Setters
+
     private String token;
     private long expiresIn;
 

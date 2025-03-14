@@ -75,7 +75,7 @@ public class UserService {
             needsUpdate = true;
         }
 
-        // Save and return user only if there are updates
+        
         return needsUpdate ? userRepository.save(user) : user;
     }
 

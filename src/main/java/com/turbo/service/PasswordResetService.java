@@ -73,7 +73,7 @@ public class PasswordResetService {
         PasswordResetToken resetToken = tokenRepository.findByToken(token);
         if (resetToken != null) {
             User user = resetToken.getUser();
-            tokenRepository.delete(resetToken); // Invalidate token after use
+            tokenRepository.delete(resetToken);
             return Optional.of(user);
         }
         return Optional.empty();

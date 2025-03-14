@@ -46,7 +46,7 @@ async function populateVehicleDropdown() {
     const vehicles = await apiService.fetchVehicles(dealershipId);
     console.log("Vehicles:", vehicles);
 
-    // Filter only available vehicles
+
     const availableVehicles = vehicles.filter(
       (vehicle) => vehicle.status === "Available"
     );
@@ -60,13 +60,11 @@ async function populateVehicleDropdown() {
       return;
     }
 
-    // Add default option
     const defaultOption = document.createElement("option");
     defaultOption.value = "";
     defaultOption.textContent = "Select a vehicle";
     dropdown.appendChild(defaultOption);
 
-    // Populate dropdown with available vehicles
     availableVehicles.forEach((vehicle) => {
       const option = document.createElement("option");
       option.value = vehicle.id;
@@ -75,7 +73,7 @@ async function populateVehicleDropdown() {
     });
   } catch (error) {
     console.error("Error fetching vehicles:", error);
-    // Add error option to dropdown
+ 
     const errorOption = document.createElement("option");
     errorOption.value = "";
     errorOption.textContent = "Error loading vehicles";
@@ -102,7 +100,7 @@ document
       const booking = await apiService.makeBooking(bookingData, dealershipId);
       console.log("Booking created:", booking);
 
-      // Show success message
+   
       const successModal = document.getElementById("success-modal");
       const modalMessage = document.getElementById("modal-message");
       if (successModal && modalMessage) {
@@ -112,19 +110,19 @@ document
         alert("Booking created successfully");
       }
 
-      // Close the booking modal
+    
       const modal = document.getElementById("booking-modal");
       if (modal) {
         modal.classList.add("hidden");
       }
 
-      // Clear the form
+    
       event.target.reset();
 
-      // Refresh the vehicle dropdown
+   
       await populateVehicleDropdown();
 
-      // Refresh calendar if function exists
+     
       if (typeof refreshCalendar === "function") {
         refreshCalendar();
       }
@@ -140,12 +138,12 @@ function setDefaultDateTime() {
 
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow.setHours(10, 0, 0, 0); // Set to 10:00 AM
+  tomorrow.setHours(10, 0, 0, 0); 
 
   const formattedDate = tomorrow.toISOString().slice(0, 16);
   dateTimeInput.value = formattedDate;
 
-  // Set minimum date to today
+
   const today = new Date();
   dateTimeInput.min = today.toISOString().slice(0, 16);
 }

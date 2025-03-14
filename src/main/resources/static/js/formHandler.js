@@ -38,7 +38,7 @@ class FormHandler {
       showModal({ message: "Vehicle created successfully.", isSuccess: true });
       await this.manager.loadVehicles();
 
-      // Load similar vehicles
+ 
       await this.manager.loadSimilarVehicles(vehicleData);
     } catch (error) {
       console.error("Error in form submission:", error);
@@ -75,24 +75,24 @@ class FormHandler {
   getVehicleData(formData) {
     const vehicleData = Object.fromEntries(formData.entries());
 
-    // Add features
+   
     const features = formData
       .getAll("features")
       .filter((val) => val.toLowerCase() !== "petrol")
       .map((name) => ({ name }));
     if (features.length) vehicleData.features = features;
 
-    // Set VRM if using lookup
+
     if (formData.get("lookupVRM")) {
       vehicleData.vrm = formData.get("lookupVRM");
     }
 
-    // Add dealership
+ 
     if (this.manager.dealershipId) {
       vehicleData.dealership = { id: this.manager.dealershipId };
     }
 
-    // Remove unnecessary fields
+   
     delete vehicleData.selectedVehicle;
     delete vehicleData.lookupVRM;
     delete vehicleData.images;
@@ -101,7 +101,7 @@ class FormHandler {
   }
 
   async deleteSelectedVehicles() {
-    // Get all checked checkboxes
+   
     const checkboxes = document.querySelectorAll(".vehicle-checkbox:checked");
     const idsToDelete = Array.from(checkboxes).map((cb) =>
       cb.getAttribute("data-id")
@@ -120,7 +120,7 @@ class FormHandler {
     }
 
     try {
-      // Delete each selected vehicle
+     
       await Promise.all(
         idsToDelete.map((id) => this.manager.apiService.deleteVehicle(id))
       );
@@ -130,7 +130,7 @@ class FormHandler {
         isSuccess: true,
       });
 
-      // Reload the vehicles list
+    
       await this.manager.loadVehicles();
     } catch (error) {
       showModal({

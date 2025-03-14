@@ -5,11 +5,11 @@ class ApiService {
 
   async getCurrentUser() {
     try {
-      // Try to get user profile using session cookies (OAuth2)
+     
       const response = await fetch("/api/user/profile", {
         method: "GET",
         headers: this.getHeaders(),
-        // Important: include credentials to send cookies
+        
         credentials: "include",
       });
 
@@ -88,7 +88,7 @@ class ApiService {
   }
 
   async getSalesData(dealershipId, startDate, endDate) {
-    // Default to 1 if nothing else works
+ 
 
     console.log(
       `Fetching sales data for dealership ${dealershipId} from ${startDate} to ${endDate}`
@@ -194,12 +194,11 @@ class ApiService {
   
       const data = await response.json();
   
-      // Check if the response contains data
+   
       if (Array.isArray(data) && data.length > 0) {
         return data;
       }
   
-      // If we get here, we have a response but no valid data
       throw new Error("No listings found");
   
     } catch (error) {
@@ -213,14 +212,14 @@ class ApiService {
       "Content-Type": "application/json",
     };
 
-    // Fixed: Don't try to reassign to const token
+ 
     let token = localStorage.getItem("token");
     if (!token) {
       console.warn(
         "No token found in local storage looking for token in session storage"
       );
       token = sessionStorage.getItem("token");
-      // Only log if token exists
+ 
       if (token) {
         console.log("Token found in session storage");
       } else {

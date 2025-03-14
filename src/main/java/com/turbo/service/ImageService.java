@@ -31,20 +31,20 @@ public class ImageService {
 
     public VehicleImage saveImage(MultipartFile file, Vehicle vehicle, int displayOrder, boolean isPrimary)
             throws IOException {
-        // Create upload directory if it doesn't exist
+        
         Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
 
-        // Generate unique filename
+       
         String filename = UUID.randomUUID().toString() + getExtension(file.getOriginalFilename());
         Path filePath = uploadPath.resolve(filename);
 
-        // Save the file
+       
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-        // Create VehicleImage entity
+      
         VehicleImage image = new VehicleImage();
         image.setVehicle(vehicle);
         image.setUrl("/uploads/vehicles/" + filename);
@@ -69,7 +69,7 @@ public class ImageService {
             return;
         }
 
-        // Extract filename from URL
+       
         String filename = image.getUrl().substring(image.getUrl().lastIndexOf('/') + 1);
         Path filePath = Paths.get(uploadDir, filename);
 

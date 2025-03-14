@@ -86,7 +86,7 @@ public interface AnalyticsRepository extends JpaRepository<Vehicle, Long> {
                         @Param("before") LocalDateTime before,
                         @Param("dealershipId") Long dealershipId);
 
-        // Fixed query that was causing issues
+       
         @Query(value = "SELECT AVG(DATEDIFF(sold_date, created_at)) " +
                         "FROM vehicle " +
                         "WHERE status = 'Sold' AND sold_date IS NOT NULL", nativeQuery = true)

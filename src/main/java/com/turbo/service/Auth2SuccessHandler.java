@@ -33,29 +33,29 @@ public class Auth2SuccessHandler implements AuthenticationSuccessHandler {
         logger.info("onAuthenticationSuccess method called");
         logger.info("Authentication success for user: " + authentication.getName());
 
-        // Cast to OAuth2User
+        
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
         logger.info("OAuth2User details: " + oauth2User.getAttributes());
 
-        // Extract user details and claims
+      
         Map<String, Object> claims = new HashMap<>();
-        claims.put("username", oauth2User.getAttribute("email")); // Assuming "email" attribute exists
+        claims.put("username", oauth2User.getAttribute("email")); 
         claims.put("roles", authentication.getAuthorities());
         logger.info("Claims: " + claims);
 
-        // Create a temporary UserDetails-like object for JWT generation
+       
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                oauth2User.getAttribute("email"), // Use email as the username
+                oauth2User.getAttribute("email"),
                 "",
-                authentication.getAuthorities() // Use the same authorities
+                authentication.getAuthorities() 
         );
         logger.info("UserDetails created for JWT generation: " + userDetails);
 
-        // Generate JWT token using the userDetails-like object
+       
         String token = jwtTokenProvider.generateToken(claims, userDetails);
         logger.info("Generated JWT token: " + token);
 
-        // Send HTML that will store both token and token in localStorage
+       
         String html = """
                 <!DOCTYPE html>
                 <html>

@@ -39,7 +39,7 @@ public class VehicleFeature {
     @JsonBackReference
     private Vehicle vehicle;
 
-    // Audit fields
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 

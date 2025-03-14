@@ -29,7 +29,7 @@ public class ScraperController {
             @RequestParam String postcode,
             @RequestParam(defaultValue = "false") boolean forceScrape) {
         try {
-            // If forceScrape is true or no listings exist in DB, scrape from AutoTrader
+            
             List<CompetitorsListings> listings;
 
             if (forceScrape || !competitorsListingsService.listingsExistInDatabase(make, model, year, postcode)) {

@@ -18,23 +18,22 @@ public class Authority implements GrantedAuthority {
     private String authority;
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
-    @JsonIgnore // Prevents lazy initialization exception and serialization of the users
-                // collection
+    @JsonIgnore 
+              
     private Set<User> users = new HashSet<>();
 
-    // Constructors
+    
     public Authority() {
-        // No-argument constructor
     }
 
-    // Getters and Setters
+    
 
-    // ID
+   
     public Long getId() {
         return id;
     }
 
-    // Authority
+   
     @Override
     public String getAuthority() {
         return authority;
@@ -44,7 +43,7 @@ public class Authority implements GrantedAuthority {
         this.authority = authority;
     }
 
-    // Users (ignored for serialization and lazy-loaded)
+   
     public Set<User> getUsers() {
         return users;
     }

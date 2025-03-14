@@ -78,17 +78,17 @@ public class User {
     private UserTypeEnum role;
 
     public User() {
-        // No-argument constructor
+      
     }
 
-    // Getters and Setters
+    
 
-    // ID
+
     public Long getId() {
         return id;
     }
 
-    // Username
+
     public String getUsername() {
         return username;
     }
@@ -97,7 +97,6 @@ public class User {
         this.username = username;
     }
 
-    // Password Hash
     public String getPasswordHash() {
         return passwordHash;
     }
@@ -106,7 +105,7 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    // Email
+ 
     public String getEmail() {
         return email;
     }
@@ -115,7 +114,7 @@ public class User {
         this.email = email;
     }
 
-    // First Name
+   
     public String getFirstName() {
         return firstName;
     }
@@ -124,7 +123,7 @@ public class User {
         this.firstName = firstName;
     }
 
-    // Last Name
+
     public String getLastName() {
         return lastName;
     }
@@ -133,7 +132,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    // Phone
+  
     public String getPhone() {
         return phone;
     }
@@ -142,7 +141,7 @@ public class User {
         this.phone = phone;
     }
 
-    // User Type
+
     public UserTypeEnum getUserType() {
         return userType;
     }
@@ -151,7 +150,7 @@ public class User {
         this.userType = userType;
     }
 
-    // Enabled
+
     public Boolean getEnabled() {
         return enabled;
     }
@@ -160,17 +159,17 @@ public class User {
         this.enabled = enabled;
     }
 
-    // Created At
+  
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    // Updated At
+    
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    // Authorities
+   
     public Set<Authority> getAuthorities() {
         return authorities;
     }

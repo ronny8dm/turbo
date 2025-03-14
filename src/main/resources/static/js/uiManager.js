@@ -40,7 +40,7 @@ class uiManager {
 
     tableBody.innerHTML = "";
 
-    // Remove any existing image modal to prevent duplicates
+   
     const existingModal = document.getElementById("image-modal");
     if (existingModal) {
       existingModal.remove();
@@ -52,10 +52,10 @@ class uiManager {
         console.log("Images array:", vehicle.images);
       }
 
-      // Set default image
+    
       let imageUrl = "/static/images/place-holder.jpg";
 
-      // Find primary image or first image
+      
       if (vehicle.images && vehicle.images.length > 0) {
         const primaryImg = vehicle.images.find((img) => img.isPrimary === true);
         if (primaryImg) {
@@ -155,7 +155,7 @@ class uiManager {
       tableBody.appendChild(row);
     });
 
-    // Add modal HTML
+  
     const modalHtml = `
           <div id="image-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black bg-opacity-75">
             <div class="flex items-center justify-center min-h-screen p-4">
@@ -181,13 +181,13 @@ class uiManager {
     const modalImage = document.getElementById("modal-image");
     const thumbnailsContainer = document.getElementById("image-thumbnails");
 
-    // Set the main image
+   
     modalImage.src = imageUrl;
 
-    // Clear previous thumbnails
+   
     thumbnailsContainer.innerHTML = "";
 
-    // Add thumbnails if there are multiple images
+   
     if (Array.isArray(images) && images.length > 1) {
       images.forEach((image) => {
         const thumbnail = document.createElement("img");
@@ -196,7 +196,7 @@ class uiManager {
         thumbnail.className =
           "w-16 h-16 object-cover rounded cursor-pointer border-2";
 
-        // Highlight the current image
+     
         if (image.url === imageUrl) {
           thumbnail.classList.add("border-blue-500");
         } else {
@@ -206,11 +206,11 @@ class uiManager {
           );
         }
 
-        // Change main image when clicking thumbnail
+        
         thumbnail.onclick = () => {
           modalImage.src = image.url;
 
-          // Update thumbnail highlighting
+        
           thumbnailsContainer.querySelectorAll("img").forEach((img) => {
             img.classList.remove("border-blue-500");
             img.classList.add("border-transparent", "hover:border-gray-300");
@@ -307,11 +307,11 @@ class uiManager {
       select.innerHTML =
         '<option value="" disabled selected>Select Vehicle</option>';
 
-      // Fetch vehicle data using ApiService
+    
       const data = await this.manager.apiService.lookupVehicle(vrm);
       console.log("[DEBUG] Vehicle lookup response:", data);
 
-      // Populate the select dropdown
+    
       const option = document.createElement("option");
       option.value = JSON.stringify(data);
       option.textContent = `${data.CarMake?.CurrentTextValue || ""} ${
@@ -320,10 +320,10 @@ class uiManager {
       option.selected = true;
       select.appendChild(option);
 
-      // Populate the form fields
+  
       this.populateVehicleForm(data);
 
-      // Load similar vehicles
+   
       await this.manager.loadSimilarVehicles(data);
     } catch (error) {
       console.error("Error during vehicle lookup:", error);
@@ -363,21 +363,20 @@ class uiManager {
     };
 
     Object.entries(fieldMappings).forEach(([fieldName, value]) => {
-      if (!value) return; // Skip if value is undefined or null
+      if (!value) return; 
 
-      // Update display element
+      
       const displayElement = document.getElementById(`${fieldName}-display`);
       if (displayElement) {
         displayElement.textContent = value;
       }
 
-      // Update hidden input
+     
       const inputElement = document.getElementById(`${fieldName}-input`);
       if (inputElement) {
         inputElement.value = value;
       }
 
-      // Fall back to regular form element if no display/input pattern
       const formElement = form.elements[fieldName];
       if (formElement && !displayElement) {
         formElement.value = value;
@@ -409,7 +408,6 @@ class uiManager {
     document.getElementById("insuranceGroupMax-input").value =
       vehicleData.insuranceGroupMax;
 
-    // Update display elements
     document.getElementById("make-display").textContent = vehicleData.make;
     document.getElementById("model-display").textContent = vehicleData.model;
     document.getElementById("year-display").textContent = vehicleData.year;

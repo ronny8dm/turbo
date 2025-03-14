@@ -4,11 +4,17 @@ import com.turbo.service.UserDetailService;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.sql.DataSource;
+
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.CacheControl;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -55,6 +61,20 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
                 return cacheManager;
         }
 
+        @Bean
+        @Profile("dev")
+        public CommandLineRunner initDatabase(DataSource dataSource) {
+                return args -> {
+                        ResourceDatabasePopulator cleaner = new ResourceDatabasePopulator();
+                        cleaner.addScript(new ClassPathResource("cleanup.sql"));
+                        cleaner.execute(dataSource);
+
+                        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+                        populator.addScript(new ClassPathResource("data.sql"));
+                        populator.execute(dataSource);
+                };
+        }
+
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
                 registry.addResourceHandler("/css/**")
@@ -92,7 +112,6 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
                                 .addResourceLocations("file:" + System.getProperty("user.home") + "/uploads/")
                                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
 
-                // Remove conflicting handlers for the same paths
                 registry.addResourceHandler("/static/**")
                                 .addResourceLocations("classpath:/static/")
                                 .setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
