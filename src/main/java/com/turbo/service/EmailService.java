@@ -20,7 +20,7 @@ public class EmailService {
         message.setTo(to);
         message.setSubject("Password Reset Request");
         message.setText("To reset your password, click the link below:\n"
-                + "http://localhost:8080/api/password/reset-password?token=" + token);
+                + "https://turbo.ronnyjdiaz/api/password/reset-password?token=" + token);
         mailSender.send(message);
     }
 }
