@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- Edit Vehicle Modal Fragment -->
+    <div th:fragment="edit-vehicle-modal">
+      <div
+        id="edit-vehicle-modal"
+        tabindex="-1"
+        aria-hidden="true"
+        class="hidden fixed inset-0 z-50 justify-center items-center bg-black bg-opacity-50"
+      >
+        <div
+          class="relative w-full max-w-4xl bg-white rounded-lg shadow-lg flex flex-col"
+          style="max-height:70vh;"
+        >
+          <!-- Modal Header -->
+          <div class="flex items-center justify-between p-4 border-b flex-shrink-0">
+            <h3 class="text-xl font-semibold text-gray-900">Edit Vehicle</h3>
+            <button
+              type="button"
+              onclick="inventoryManager.uiManager.toggleModal('edit-vehicle-modal', false)"
+              class="text-gray-400 hover:bg-gray-200 p-2 rounded"
+            >
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          
+          <!-- Modal Body -->
+          <div class="p-4 overflow-y-auto flex-1 space-y-6">
+            <form id="edit-vehicle-form" class="space-y-6">
+              <input type="hidden" name="id" id="edit-id-input">
+              
+              <!-- Vehicle Details -->
+              <section>
+                <h4 class="text-lg font-semibold mb-2">Vehicle Details</h4>
+                <!-- Basic Information -->
+                <div>
+                  <h5 class="text-md font-medium mb-1">Basic Information</h5>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">Make</label>
+                      <input 
+                        type="text" 
+                        name="make" 
+                        id="edit-make-input"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">Model</label>
+                      <input 
+                        type="text" 
+                        name="model" 
+                        id="edit-model-input"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">Year</label>
+                      <input 
+                        type="text" 
+                        name="year" 
+                        id="edit-year-input"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">Description</label>
+                      <input 
+                        type="text" 
+                        name="description" 
+                        id="edit-description-input"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">Colour</label>
+                      <input 
+                        type="text" 
+                        name="colour" 
+                        id="edit-colour-input"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">VIN</label>
+                      <input 
+                        type="text" 
+                        name="vin" 
+                        id="edit-vin-input" 
+                        required
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">VRM</label>
+                      <input 
+                        type="text" 
+                        name="vrm" 
+                        id="edit-vrm-input" 
+                        required
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">Body Style</label>
+                      <input 
+                        type="text" 
+                        name="bodyStyle" 
+                        id="edit-bodyStyle-input"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      >
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Technical & Performance Details -->
+                <div class="mt-4">
+                  <h5 class="text-md font-medium mb-1">Technical Details</h5>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">Transmission</label>
+                      <input 
+                        type="text" 
+                        name="transmission" 
+                        id="edit-transmission-input"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">Engine Size</label>
+                      <input 
+                        type="text" 
+                        name="engineSize" 
+                        id="edit-engineSize-input"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      >
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700">Doors</label>
+                      <input 
+                        type="text" 
+                        name="doors" 
+                        id="edit-doors-input"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </section>
+              
+              <!-- Features Section -->
+              <section>
+                <h4 class="text-lg font-semibold mb-2">Step 3: Vehicle Features</h4>
+                <div class="flex flex-col gap-2">
+                  <div class="flex items-center gap-2">
+                    <input
+                      type="text"
+                      id="new-feature-name"
+                      placeholder="Enter a feature"
+                      class="mt-1 block w-1/2 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    />
+                    <button
+                      type="button"
+                      onclick="inventoryManager.featureManager.addFeatureToEditForm()"
+                      class="px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      Add Feature
+                    </button>
+                  </div>
+                  <ul id="edit-features-list" class="mt-2 list-disc list-inside text-gray-700"></ul>
+                  <!-- Hidden container for features that will be submitted -->
+                  <div id="edit-features-hidden-inputs"></div>
+                </div>
+              </section>
+
+              <section>
+                <h4 class="text-lg font-semibold mb-2">Vehicle Images</h4>
+                
+                <!-- Current Images Display -->
+                <div class="mb-4">
+                  <h5 class="text-md font-medium mb-1">Current Images</h5>
+                  <div id="edit-vehicle-images" class="flex flex-wrap">
+                    <!-- Images will be added here dynamically -->
+                  </div>
+                </div>
+                
+                <!-- Image Upload -->
+                <div class="border-t pt-3">
+                  <h5 class="text-md font-medium mb-1">Add New Images</h5>
+                  <div class="flex flex-col gap-2">
+                    <input 
+                      type="file" 
+                      id="edit-vehicle-image-upload" 
+                      accept="image/*" 
+                      multiple
+                      class="block w-full text-sm text-gray-500
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-md file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-50 file:text-blue-700
+                        hover:file:bg-blue-100"
+                    />
+                    <button 
+                      type="button" 
+                      onclick="window.inventoryManager.imageManager.uploadVehicleImages(
+                        document.getElementById('edit-id-input').value, 
+                        document.getElementById('edit-vehicle-image-upload')
+                      )"
+                      class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 w-auto"
+                    >
+                      Upload Images
+                    </button>
+                    <p class="text-sm text-gray-500">You can select multiple images to upload at once.</p>
+                  </div>
+                </div>
+              </section>
+              
+              <!-- Sales Information -->
+              <section>
+                <h4 class="text-lg font-semibold mb-2">Sales Information</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label for="edit-status" class="block text-sm font-medium">Status</label>
+                    <select name="status" id="edit-status" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                      <option value="Available">Available</option>
+                      <option value="Sold">Sold</option>
+                      <option value="Reserved">Reserved</option>
+                      <option value="In Service">In Service</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="edit-listPrice" class="block text-sm font-medium">List Price</label>
+                    <input 
+                      type="number" 
+                      step="0.01" 
+                      name="listPrice" 
+                      id="edit-listPrice" 
+                      class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" 
+                    />
+                  </div>
+                  <div>
+                    <label for="edit-soldPrice" class="block text-sm font-medium">Sold Price</label>
+                    <input 
+                      type="number" 
+                      step="0.01" 
+                      name="soldPrice" 
+                      id="edit-soldPrice" 
+                      class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" 
+                    />
+                  </div>
+                  <div>
+                    <label for="edit-soldDate" class="block text-sm font-medium">Sold Date</label>
+                    <input 
+                      type="datetime-local" 
+                      name="soldDate" 
+                      id="edit-soldDate" 
+                      class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" 
+                    />
+                  </div>
+                </div>
+              </section>
+              
+              <!-- Submit Button -->
+              <div class="flex justify-end">
+                <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  Update Vehicle
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

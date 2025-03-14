@@ -1,0 +1,317 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <title>turbo Dashboard - Settings</title>
+  </head>
+  <body>
+    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    <div class="p-4 sm:ml-64">
+      <div class="p-4 dark:border-gray-700 mt-14">
+        <!-- Tabs navigation -->
+        <ul
+          class="flex flex-wrap -mb-px text-sm font-medium text-center"
+          id="default-tab"
+          data-tabs-toggle="tabs"
+          role="tablist"
+        >
+          <li class="me-2" role="presentation">
+            <button
+              class="inline-block p-4 border-b-2 text-blue-600 border-blue-600 rounded-t-lg active"
+              id="profile-tab"
+              data-tabs-target="#profile"
+              type="button"
+              role="tab"
+              aria-controls="profile"
+              aria-selected="true"
+            >
+              Profile
+            </button>
+          </li>
+          <li class="me-2" role="presentation">
+            <button
+              class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+              id="team-tab"
+              data-tabs-target="#team"
+              type="button"
+              role="tab"
+              aria-controls="team"
+              aria-selected="false"
+            >
+              Team
+            </button>
+          </li>
+        </ul>
+
+        <!-- Tabs content -->
+        <div id="default-tab-content" class="mt-4">
+          <div
+            class="p-4 flex flex-col gap-4 rounded-lg"
+            id="profile"
+            role="tabpanel"
+            aria-labelledby="profile-tab"
+          >
+            <form
+              id="profileForm"
+              method="PUT"
+              class="p-4 border-2 border-gray-200 border-dashed rounded-lg"
+            >
+              <div class="border-b border-slate-6 px-6 py-4">
+                <h2 class="text-xl tracking-[-0.16px] text-slate-12 font-bold">
+                  Profile Settings
+                </h2>
+              </div>
+              <div class="grid gap-4 mb-4 md:grid-cols-2">
+                <div class="w-full p-4">
+                  <label
+                    for="first_name"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >First Name</label
+                  >
+                  <input
+                    type="text"
+                    id="first_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    required
+                  />
+                </div>
+                <div class="w-full p-4">
+                  <label
+                    for="last_name"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Last Name</label
+                  >
+                  <input
+                    type="text"
+                    id="last_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    required
+                  />
+                </div>
+                <div class="w-full p-4">
+                  <label
+                    for="phone"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Phone</label
+                  >
+                  <input
+                    type="tel"
+                    id="phone"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    required
+                  />
+                </div>
+                <div class="w-full p-4">
+                  <label
+                    for="email"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Email</label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    required
+                  />
+                </div>
+                <div class="w-full p-4">
+                  <label
+                    for="current_password"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >Current Password</label
+                  >
+                  <input
+                    type="password"
+                    id="current_password"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  />
+                </div>
+                <div class="w-full p-4">
+                  <label
+                    for="new_password"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                    >New Password</label
+                  >
+                  <input
+                    type="password"
+                    id="new_password"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  />
+                </div>
+              </div>
+              <button
+                type="submit"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-1/3 sm:w-auto px-5 py-2.5 text-center"
+              >
+                Save Changes
+              </button>
+            </form>
+            <section
+              class="p-4 border-2 border-gray-200 border-dashed rounded-lg"
+            >
+              <div class="border-b border-slate-6 px-6 py-4">
+                <h2 class="text-xl tracking-[-0.16px] text-slate-12 font-bold">
+                  Dealership Details
+                </h2>
+              </div>
+              <div class="p-6" id="dealership-details">
+                <div class="grid gap-4 mb-4 md:grid-cols-2">
+                  <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900"
+                      >Name</label
+                    >
+                    <p id="dealership-name" class="text-sm text-gray-700"></p>
+                  </div>
+                  <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900"
+                      >Email</label
+                    >
+                    <p id="dealership-email" class="text-sm text-gray-700"></p>
+                  </div>
+                  <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900"
+                      >Phone</label
+                    >
+                    <p id="dealership-phone" class="text-sm text-gray-700"></p>
+                  </div>
+                  <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900"
+                      >Address</label
+                    >
+                    <p
+                      id="dealership-address"
+                      class="text-sm text-gray-700"
+                    ></p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div
+            class="hidden rounded-lg bg-gray-50"
+            id="team"
+            role="tabpanel"
+            aria-labelledby="team-tab"
+          >
+            <div th:replace="~{fragments/team-table :: team-table}"></div>
+          </div>
+        </div>
+
+        <div
+          class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800"
+          id="settings"
+          role="tabpanel"
+          aria-labelledby="settings-tab"
+        >
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            This is some placeholder content the
+            <strong class="font-medium text-gray-800 dark:text-white"
+              >Settings tab's associated content</strong
+            >. Clicking another tab will toggle the visibility of this one for
+            the next. The tab JavaScript swaps classes to control the content
+            visibility and styling.
+          </p>
+        </div>
+
+        <div
+          class="hidden p-4 rounded-lg bg-gray-50"
+          id="contacts"
+          role="tabpanel"
+          aria-labelledby="contacts-tab"
+        >
+          <p class="text-sm text-gray-500">
+            This is some placeholder content for the
+            <strong class="font-medium text-gray-800"
+              >Contacts tab's associated content</strong
+            >. Clicking another tab will toggle the visibility of this one for
+            the next. The tab JavaScript swaps classes to control the content
+            visibility and styling.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="success-modal"
+      tabindex="-1"
+      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+    >
+      <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <button
+            type="button"
+            class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-hide="success-modal"
+          >
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+          <div class="p-4 md:p-5 text-center">
+            <svg
+              id="modal-icon"
+              class="mx-auto mb-4 w-12 h-12"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <!-- Default Icon (Success) -->
+              <path
+                id="modal-icon-path"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 6l3 3-3 3m3-3H7"
+              />
+            </svg>
+            <h3
+              id="modal-message"
+              class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+            >
+              Profile updated successfully!
+            </h3>
+            <button
+              data-modal-hide="success-modal"
+              type="button"
+              class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div th:replace="~{fragments/new-user :: user-modal}"></div>
+
+    <div th:replace="~{fragments/dealership-modal :: dealership-modal}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <!-- Load main.js before inline script -->
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+  </body>
+</html>

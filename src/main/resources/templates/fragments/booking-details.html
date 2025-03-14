@@ -1,0 +1,54 @@
+<div th:fragment="booking-details">
+    <div
+        id="booking-details-modal"
+        tabindex="-1"
+        aria-hidden="true"
+        class="hidden fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50"
+    >
+        <div class="relative p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Booking Details</h3>
+                <div class="mt-2 space-y-4">
+                    <div>
+                        <p class="text-sm font-medium text-gray-700">Customer:</p>
+                        <p id="detail-customer-name" class="font-semibold"></p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-700">Vehicle:</p>
+                        <p id="detail-vehicle-info" class="font-semibold"></p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-700">Date & Time:</p>
+                        <input type="datetime-local" id="detail-datetime" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-gray-700">Status:</p>
+                        <p id="detail-status" class="font-semibold"></p>
+                    </div>
+                    <input type="hidden" id="detail-booking-id">
+                    <div class="flex justify-between space-x-2 mt-6">
+                        <button id="btn-cancel-booking" class="bg-yellow-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-yellow-600">
+                            Cancel Booking
+                        </button>
+                        <button id="btn-complete-booking" class="bg-green-600 px-4 py-2 rounded-md text-sm font-medium text-white hover:bg-green-700">
+                            Mark Completed
+                        </button>
+                    </div>
+                    <div class="flex justify-between space-x-2 mt-2">
+                        <button id="btn-update-booking" class="bg-blue-600 px-4 py-2 rounded-md text-sm font-medium text-white hover:bg-blue-700">
+                            Update Time
+                        </button>
+                        <button id="btn-delete-booking" class="bg-red-600 px-4 py-2 rounded-md text-sm font-medium text-white hover:bg-red-700">
+                            Delete
+                        </button>
+                    </div>
+                    <div class="flex justify-end mt-2">
+                        <button id="close-details-modal-btn" class="bg-gray-200 px-4 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-300">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

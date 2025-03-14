@@ -1,0 +1,77 @@
+/** @format */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide spinner controls for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.no-spin::-webkit-inner-spin-button,
+.no-spin::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-spin {
+  -moz-appearance: textfield;
+}
+
+.vehicle-thumbnail {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.vehicle-thumbnail-count {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.7);
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.125rem 0.25rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.fc-button.fc-button-primary.fc-button-active{
+  background-color: #2563eb !important;
+  border: 1px solid #d1d5db !important;
+  color: #ffff !important;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  
+}
+
+.fc-button.fc-button-primary{
+  background-color: #ffff !important;
+  border: 1px solid #2563eb !important;
+  color: #000 !important;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+
+.fc-button.fc-button-primary.fc-today-button{
+  background-color: #2563eb !important;
+  border: 1px solid #d1d5db !important;
+  color: #ffff !important;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+}

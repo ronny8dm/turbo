@@ -1,0 +1,15 @@
+<div th:fragment="calendar" class="mt-8">
+    
+    <!-- Add container with fixed dimensions -->
+    <div class="calendar-container w-1/2 mx-auto bg-white rounded-lg shadow p-4">
+        <h2 class="text-xl font-semibold mb-4">Test Drive Bookings</h2>
+      <div id="calendar"></div>
+      <div class="text-center mt-4">
+        <button 
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+          onclick="document.getElementById('booking-modal').classList.remove('hidden')">
+          Book New Appointment
+        </button>
+      </div>
+    </div>
+  </div>
